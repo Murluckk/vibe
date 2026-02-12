@@ -1,7 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+const CA = 'A4J6LAiSbvUz2c66urmCQEfrbPBQu6ebSwaZgcfqpump'
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [copied, setCopied] = useState(false)
+
+  const copyCA = () => {
+    navigator.clipboard.writeText(CA)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -95,24 +104,41 @@ export default function Hero() {
           <span className="text-neon-green text-glow-green">Vibe Coded</span>
         </p>
 
-        <p className="text-gray-500 text-lg mb-12 max-w-2xl mx-auto">
+        <p className="text-gray-500 text-lg mb-8 max-w-2xl mx-auto">
           No utility. No whitepaper. No dev team. Just pure, unfiltered vibes.
           <br />
           <span className="text-neon-purple">This is financial advice.*</span>
         </p>
 
+        <div className="mb-10 flex justify-center">
+          <button
+            onClick={copyCA}
+            className="group flex items-center gap-3 px-5 py-3 rounded-xl bg-dark-card border border-dark-border hover:border-neon-green/50 transition-all duration-300 cursor-pointer"
+          >
+            <span className="text-xs text-gray-500 uppercase tracking-wider">CA</span>
+            <span className="font-mono text-sm sm:text-base text-gray-300 group-hover:text-neon-green transition-colors">
+              {CA.slice(0, 6)}...{CA.slice(-4)}
+            </span>
+            <span className={`text-xs font-semibold transition-all duration-200 ${copied ? 'text-neon-green' : 'text-gray-500 group-hover:text-gray-300'}`}>
+              {copied ? '✓ Copied!' : 'Copy'}
+            </span>
+          </button>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
           <a
-            href="#mine"
+            href={`https://pump.fun/coin/${CA}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative px-8 py-4 rounded-xl bg-neon-green/10 border-2 border-neon-green text-neon-green font-bold text-lg hover:bg-neon-green/20 transition-all duration-300 box-glow-green"
           >
-            <span className="relative z-10">Start Mining $VIBE</span>
+            <span className="relative z-10">Buy on Pump.fun</span>
           </a>
           <a
-            href="#tokenomics"
+            href="#mine"
             className="px-8 py-4 rounded-xl border border-dark-border text-gray-400 font-medium text-lg hover:border-neon-purple hover:text-neon-purple transition-all duration-300"
           >
-            Tokenomics
+            Start Mining $VIBE
           </a>
         </div>
 
